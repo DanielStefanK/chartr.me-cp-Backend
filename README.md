@@ -23,6 +23,8 @@
 - if your editor does not format on save please run `npm run lint` before commiting
 - fix all errors occure on the linting proccess
 
+---
+
 ### Deploying a prisma server
 
 - Requirements:
