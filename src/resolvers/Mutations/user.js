@@ -13,7 +13,7 @@ const user = {
           password,
         },
       },
-      info
+      info,
     );
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
