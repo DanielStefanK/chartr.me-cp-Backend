@@ -1,7 +1,89 @@
 type User {
   id: ID! @unique
   email: String! @unique
+  deleted: Boolean! @default(value: "false")
   name: String!
   password: String!
-  company: String
+  company: Company @relation(name: "CompanyUserRelation")
+  interviews: [Interview!]! @relation(name: "UserInterviewRelation")
+  permissions: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Company {
+  id: ID! @unique
+  name: String!
+  deleted: Boolean! @default(value: "false")
+  contact: User!
+  employees: [User!]! @relation(name: "CompanyUserRelation")
+  interviews: [Interview!]! @relation(name: "CompanyInterviewRelation")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Permission {
+  ADMIN,
+  USER,
+  CREATEINTERVIEW,
+  SEERESULTS,
+  EDITINTERVIEW,
+  CLOSEINTERVIEW,
+  DELETEINTERVIEW,
+  EDITPERMISSIONS
+}
+
+type Interview {
+  id: ID! @unique
+  company: Company! @relation(name: "CompanyInterviewRelation")
+  inactive: Boolean! @default(value: "false")
+  deleted: Boolean! @default(value: "false")
+  creator: User! @relation(name: "UserInterviewRelation")
+  interview: [Question!]! @relation(name: "InterviewQuestionRelation")
+  results: [Result!]! @relation(name: "InterviewResultRelation")
+  limit: Int! @default(value: "100")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Result {
+  id: ID! @unique
+  deleted: Boolean! @default(value: "false")
+  ip: String
+  long: Float
+  lat: Float
+  name: String
+  email: String
+  score: Int
+  content: Json!
+  interview: Interview! @relation(name: "InterviewResultRelation")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Question {
+  id: ID! @unique
+  parentTemplate: Template @relation(name: "TemplateQuestionRelation")
+  parentQuestion: Question @relation(name: "QuestionQuestionRelation")
+  number: Int!
+  question: String!
+  subQuestions: [Question!]! @relation(name: "QuestionQuestionRelation")
+  answerTags: [String!]!
+  matchTags: [String!]!
+  distraction: Int @default(value: "0")
+  time: Int
+  givenAnswers: [String!]!
+  interview: Interview! @relation(name: "InterviewQuestionRelation")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Template {
+  id: ID! @unique
+  deleted: Boolean! @default(value: "false")
+  name: String!
+  interview: [Question!]! @relation(name: "TemplateQuestionRelation")
+  params: Json
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
