@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "prisma deploy -r ./.env",
     "lint": "eslint ./src --fix",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js"
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "token": "prisma token"
   },
   "repository": {
     "type": "git",
