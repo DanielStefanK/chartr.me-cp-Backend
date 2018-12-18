@@ -1,4 +1,4 @@
-const userMutations = require('./user');
+const userMutations = require('./userMutations');
 
 const mutations = {
   ...userMutations,

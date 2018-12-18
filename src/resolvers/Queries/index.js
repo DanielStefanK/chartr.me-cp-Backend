@@ -1,4 +1,4 @@
-const userQueries = require('./user');
+const userQueries = require('./userQueries');
 
 const queries = {
   ...userQueries,

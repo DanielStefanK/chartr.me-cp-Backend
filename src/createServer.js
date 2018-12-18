@@ -15,8 +15,12 @@ function createServer() {
     resolverValidationOptions: {
       requireResolversForResolveType: false,
     },
-    context: req => ({ ...req, db }),
+    context: req => {
+      const user = req.request.user;
+
+      return { user, db };
+    },
   });
 }
 
-module.exports = createServer;
+module.exports = { createServer, db };
