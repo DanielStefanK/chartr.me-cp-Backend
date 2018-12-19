@@ -1,10 +1,10 @@
-image: registry.gitlab.com/e-venture/docker-builder:latest
+image: registry.gitlab.com/e-venture/graphql-api/docker-builder:latest
 
 variables:
   dockerTag: '$CI_BUILD_REF'
   DOCKER_REPO: customregistry
   IMAGE_BASE_NAME: cp-backend
-  IMAGE: $EVISTA_DOCKER_REPO/$IMAGE_BASE_NAME:$CI_BUILD_REF
+  IMAGE: registry.gitlab.com/e-venture/graphql-api/$IMAGE_BASE_NAME:$CI_BUILD_REF
   CONTAINER_NAME: 'cp-backend-pipeline'
   TARGET_DIR_STAGE: /srv/docker/eval/cp-backend
   TARGET_DIR_PROD: /srv/docker/prod/cp-backend
@@ -43,9 +43,9 @@ deploy_stage:
     - docker tag $IMAGE $RELEASE_IMAGE
     - docker --tlscacert cert.ca push $RELEASE_IMAGE
     # deploy the images
-    - ssh user@someserver.com -p2224 "docker pull $RELEASE_IMAGE"
-    - ssh user@someserver.com -p2224 "${DOCKER_COMPOSE_CMD} stop"
-    - ssh user@someserver.com -p2224 "${DOCKER_COMPOSE_CMD} up -d"
+    - ssh daniel@yasminmoo.com "docker pull $RELEASE_IMAGE"
+    - ssh daniel@yasminmoo.com "${DOCKER_COMPOSE_CMD} stop"
+    - ssh daniel@yasminmoo.com "${DOCKER_COMPOSE_CMD} up -d"
   only:
     - master
 
@@ -64,8 +64,8 @@ deploy_production:
     - docker tag $IMAGE $RELEASE_IMAGE
     - docker --tlscacert cert.ca push $RELEASE_IMAGE
     # deploy the images
-    - ssh user@someserver.com -p2224 "docker pull $RELEASE_IMAGE"
-    - ssh user@someserver.com -p2224 "${DOCKER_COMPOSE_CMD} stop"
-    - ssh user@someserver.com -p2224 "${DOCKER_COMPOSE_CMD} up -d"
+    - ssh daniel@yasminmoo.com "docker pull $RELEASE_IMAGE"
+    - ssh daniel@yasminmoo.com "${DOCKER_COMPOSE_CMD} stop"
+    - ssh daniel@yasminmoo.com "${DOCKER_COMPOSE_CMD} up -d"
   only:
     - production
