@@ -26,6 +26,7 @@
     "dotenv": "^6.1.0",
     "graphql-cli": "^2.17.0",
     "graphql-yoga": "^1.16.7",
+    "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
     "nodemon": "^1.18.7",
     "prisma": "^1.21.1",

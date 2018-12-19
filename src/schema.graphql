@@ -7,16 +7,18 @@ type Me {
 
 type Query {
   me: User!
+  checkUser(email: String!): Boolean!
 }
 
 type Mutation {
   signup(name: String!, email: String!, password: String!): Me!
-  signin(email: String!, password: String!): Me!
+  login(email: String!, password: String!): Me!
 }
 
 type User {
   id: ID!
   email: String!
+  permissions: [String!]
   deleted: Boolean!
   name: String!
   company: Company

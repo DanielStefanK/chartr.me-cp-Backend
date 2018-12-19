@@ -1,9 +1,42 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 const user = {
   async signup(parent, args, ctx) {
     args.email = args.email.toLowerCase();
+
+    const schema = Joi.object().keys({
+      name: Joi.string()
+        .alphanum()
+        .min(3)
+        .max(30)
+        .required()
+        .options({
+          language: { min: 'must match password', any: 'invalid name' },
+        }),
+      password: Joi.string()
+        .regex(/^[a-zA-Z0-9]{3,30}$/)
+        .required(),
+      email: Joi.string()
+        .email({ minDomainAtoms: 2 })
+        .required(),
+    });
+
+    const { error, value } = Joi.validate(
+      {
+        name: args.name,
+        email: args.email,
+        password: args.password,
+      },
+      schema,
+    );
+
+    if (error) {
+      //TODO: error handling
+      throw new Error('Invalid Input');
+    }
+
     const password = await bcrypt.hash(args.password, 10);
 
     const user = await ctx.db.mutation.createUser({
@@ -18,7 +51,9 @@ const user = {
     return { me: user, token: token };
   },
 
-  async signin(parent, { email, password }, ctx) {
+  async login(parent, { email, password }, ctx) {
+    // TODO: validate user input
+
     const user = await ctx.db.query.user({ where: { email } });
 
     if (!user) {
