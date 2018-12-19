@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
     "deploy": "prisma deploy -r ./.env",
     "lint": "eslint ./src --fix",
     "dev": "nodemon -e js,graphql -x node --inspect src/index.js",

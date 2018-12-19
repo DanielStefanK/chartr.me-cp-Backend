@@ -1,0 +1,23 @@
+version: '3'
+services:
+  prisma:
+    image: prismagraphql/prisma:1.21
+    networks:
+      - web
+      - internal
+    labels:
+      - traefik.enabled=true
+      - traefik.backend=chartr-cp-backend
+      - traefik.frontend.rule=Host:api.chartr.me
+      - traefik.docker.network=web
+      - traefik.port=4000
+    restart: always
+    environment:
+      - PRISMA_ENDPOINT=db.chartr.me
+      - PRISMA_MANAGEMENT_API_SECRET=geheim
+      - PRISMA_SECRET=geheim
+      - APP_SECRET=geheim
+
+networks:
+  web:
+    external: true
