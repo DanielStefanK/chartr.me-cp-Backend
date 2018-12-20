@@ -1,5 +1,5 @@
-# source: https://prisma.daniel-stefan-klose.de
-# timestamp: Mon Dec 17 2018 21:53:19 GMT+0100 (GMT+01:00)
+# source: https://db.chartr.me
+# timestamp: Thu Dec 20 2018 18:53:39 GMT+0100 (GMT+01:00)
 
 type AggregateCompany {
   count: Int!
@@ -37,6 +37,7 @@ type Company implements Node {
   contact: User!
   employees(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   interviews(where: InterviewWhereInput, orderBy: InterviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Interview!]
+  results(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -57,6 +58,7 @@ input CompanyCreateInput {
   contact: UserCreateOneWithoutContactOfInput!
   employees: UserCreateManyWithoutCompanyInput
   interviews: InterviewCreateManyWithoutCompanyInput
+  results: ResultCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateOneWithoutContactInput {
@@ -74,11 +76,17 @@ input CompanyCreateOneWithoutInterviewsInput {
   connect: CompanyWhereUniqueInput
 }
 
+input CompanyCreateOneWithoutResultsInput {
+  create: CompanyCreateWithoutResultsInput
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyCreateWithoutContactInput {
   name: String!
   deleted: Boolean
   employees: UserCreateManyWithoutCompanyInput
   interviews: InterviewCreateManyWithoutCompanyInput
+  results: ResultCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutEmployeesInput {
@@ -86,6 +94,7 @@ input CompanyCreateWithoutEmployeesInput {
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   interviews: InterviewCreateManyWithoutCompanyInput
+  results: ResultCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutInterviewsInput {
@@ -93,6 +102,15 @@ input CompanyCreateWithoutInterviewsInput {
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   employees: UserCreateManyWithoutCompanyInput
+  results: ResultCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutResultsInput {
+  name: String!
+  deleted: Boolean
+  contact: UserCreateOneWithoutContactOfInput!
+  employees: UserCreateManyWithoutCompanyInput
+  interviews: InterviewCreateManyWithoutCompanyInput
 }
 
 """An edge in a connection."""
@@ -170,6 +188,7 @@ input CompanyUpdateInput {
   contact: UserUpdateOneRequiredWithoutContactOfInput
   employees: UserUpdateManyWithoutCompanyInput
   interviews: InterviewUpdateManyWithoutCompanyInput
+  results: ResultUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateManyMutationInput {
@@ -182,6 +201,13 @@ input CompanyUpdateOneRequiredWithoutInterviewsInput {
   connect: CompanyWhereUniqueInput
   update: CompanyUpdateWithoutInterviewsDataInput
   upsert: CompanyUpsertWithoutInterviewsInput
+}
+
+input CompanyUpdateOneRequiredWithoutResultsInput {
+  create: CompanyCreateWithoutResultsInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutResultsDataInput
+  upsert: CompanyUpsertWithoutResultsInput
 }
 
 input CompanyUpdateOneWithoutContactInput {
@@ -207,6 +233,7 @@ input CompanyUpdateWithoutContactDataInput {
   deleted: Boolean
   employees: UserUpdateManyWithoutCompanyInput
   interviews: InterviewUpdateManyWithoutCompanyInput
+  results: ResultUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutEmployeesDataInput {
@@ -214,6 +241,7 @@ input CompanyUpdateWithoutEmployeesDataInput {
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   interviews: InterviewUpdateManyWithoutCompanyInput
+  results: ResultUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutInterviewsDataInput {
@@ -221,6 +249,15 @@ input CompanyUpdateWithoutInterviewsDataInput {
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   employees: UserUpdateManyWithoutCompanyInput
+  results: ResultUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutResultsDataInput {
+  name: String
+  deleted: Boolean
+  contact: UserUpdateOneRequiredWithoutContactOfInput
+  employees: UserUpdateManyWithoutCompanyInput
+  interviews: InterviewUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpsertWithoutContactInput {
@@ -236,6 +273,11 @@ input CompanyUpsertWithoutEmployeesInput {
 input CompanyUpsertWithoutInterviewsInput {
   update: CompanyUpdateWithoutInterviewsDataInput!
   create: CompanyCreateWithoutInterviewsInput!
+}
+
+input CompanyUpsertWithoutResultsInput {
+  update: CompanyUpdateWithoutResultsDataInput!
+  create: CompanyCreateWithoutResultsInput!
 }
 
 input CompanyWhereInput {
@@ -382,6 +424,9 @@ input CompanyWhereInput {
   interviews_every: InterviewWhereInput
   interviews_some: InterviewWhereInput
   interviews_none: InterviewWhereInput
+  results_every: ResultWhereInput
+  results_some: ResultWhereInput
+  results_none: ResultWhereInput
 }
 
 input CompanyWhereUniqueInput {
@@ -392,6 +437,7 @@ scalar DateTime
 
 type Interview implements Node {
   id: ID!
+  name: String!
   company: Company!
   inactive: Boolean!
   deleted: Boolean!
@@ -414,6 +460,7 @@ type InterviewConnection {
 }
 
 input InterviewCreateInput {
+  name: String!
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -444,6 +491,7 @@ input InterviewCreateOneWithoutResultsInput {
 }
 
 input InterviewCreateWithoutCompanyInput {
+  name: String!
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -453,6 +501,7 @@ input InterviewCreateWithoutCompanyInput {
 }
 
 input InterviewCreateWithoutCreatorInput {
+  name: String!
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -462,6 +511,7 @@ input InterviewCreateWithoutCreatorInput {
 }
 
 input InterviewCreateWithoutInterviewInput {
+  name: String!
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -471,6 +521,7 @@ input InterviewCreateWithoutInterviewInput {
 }
 
 input InterviewCreateWithoutResultsInput {
+  name: String!
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -491,6 +542,8 @@ type InterviewEdge {
 enum InterviewOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   inactive_ASC
   inactive_DESC
   deleted_ASC
@@ -505,6 +558,7 @@ enum InterviewOrderByInput {
 
 type InterviewPreviousValues {
   id: ID!
+  name: String!
   inactive: Boolean!
   deleted: Boolean!
   limit: Int!
@@ -561,6 +615,46 @@ input InterviewScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   inactive: Boolean
 
   """All values that are not equal to given value."""
@@ -677,6 +771,7 @@ input InterviewSubscriptionWhereInput {
 }
 
 input InterviewUpdateInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -687,12 +782,14 @@ input InterviewUpdateInput {
 }
 
 input InterviewUpdateManyDataInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
 }
 
 input InterviewUpdateManyMutationInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -740,6 +837,7 @@ input InterviewUpdateOneRequiredWithoutResultsInput {
 }
 
 input InterviewUpdateWithoutCompanyDataInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -749,6 +847,7 @@ input InterviewUpdateWithoutCompanyDataInput {
 }
 
 input InterviewUpdateWithoutCreatorDataInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -758,6 +857,7 @@ input InterviewUpdateWithoutCreatorDataInput {
 }
 
 input InterviewUpdateWithoutInterviewDataInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -767,6 +867,7 @@ input InterviewUpdateWithoutInterviewDataInput {
 }
 
 input InterviewUpdateWithoutResultsDataInput {
+  name: String
   inactive: Boolean
   deleted: Boolean
   limit: Int
@@ -856,6 +957,46 @@ input InterviewWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   inactive: Boolean
 
   """All values that are not equal to given value."""
@@ -1871,6 +2012,7 @@ type Result implements Node {
   score: Int
   content: Json!
   interview: Interview!
+  company: Company!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1895,11 +2037,29 @@ input ResultCreateInput {
   score: Int
   content: Json!
   interview: InterviewCreateOneWithoutResultsInput!
+  company: CompanyCreateOneWithoutResultsInput!
+}
+
+input ResultCreateManyWithoutCompanyInput {
+  create: [ResultCreateWithoutCompanyInput!]
+  connect: [ResultWhereUniqueInput!]
 }
 
 input ResultCreateManyWithoutInterviewInput {
   create: [ResultCreateWithoutInterviewInput!]
   connect: [ResultWhereUniqueInput!]
+}
+
+input ResultCreateWithoutCompanyInput {
+  deleted: Boolean
+  ip: String
+  long: Float
+  lat: Float
+  name: String
+  email: String
+  score: Int
+  content: Json!
+  interview: InterviewCreateOneWithoutResultsInput!
 }
 
 input ResultCreateWithoutInterviewInput {
@@ -1911,6 +2071,7 @@ input ResultCreateWithoutInterviewInput {
   email: String
   score: Int
   content: Json!
+  company: CompanyCreateOneWithoutResultsInput!
 }
 
 """An edge in a connection."""
@@ -2295,6 +2456,7 @@ input ResultUpdateInput {
   score: Int
   content: Json
   interview: InterviewUpdateOneRequiredWithoutResultsInput
+  company: CompanyUpdateOneRequiredWithoutResultsInput
 }
 
 input ResultUpdateManyDataInput {
@@ -2319,6 +2481,17 @@ input ResultUpdateManyMutationInput {
   content: Json
 }
 
+input ResultUpdateManyWithoutCompanyInput {
+  create: [ResultCreateWithoutCompanyInput!]
+  connect: [ResultWhereUniqueInput!]
+  disconnect: [ResultWhereUniqueInput!]
+  delete: [ResultWhereUniqueInput!]
+  update: [ResultUpdateWithWhereUniqueWithoutCompanyInput!]
+  updateMany: [ResultUpdateManyWithWhereNestedInput!]
+  deleteMany: [ResultScalarWhereInput!]
+  upsert: [ResultUpsertWithWhereUniqueWithoutCompanyInput!]
+}
+
 input ResultUpdateManyWithoutInterviewInput {
   create: [ResultCreateWithoutInterviewInput!]
   connect: [ResultWhereUniqueInput!]
@@ -2335,6 +2508,18 @@ input ResultUpdateManyWithWhereNestedInput {
   data: ResultUpdateManyDataInput!
 }
 
+input ResultUpdateWithoutCompanyDataInput {
+  deleted: Boolean
+  ip: String
+  long: Float
+  lat: Float
+  name: String
+  email: String
+  score: Int
+  content: Json
+  interview: InterviewUpdateOneRequiredWithoutResultsInput
+}
+
 input ResultUpdateWithoutInterviewDataInput {
   deleted: Boolean
   ip: String
@@ -2344,11 +2529,23 @@ input ResultUpdateWithoutInterviewDataInput {
   email: String
   score: Int
   content: Json
+  company: CompanyUpdateOneRequiredWithoutResultsInput
+}
+
+input ResultUpdateWithWhereUniqueWithoutCompanyInput {
+  where: ResultWhereUniqueInput!
+  data: ResultUpdateWithoutCompanyDataInput!
 }
 
 input ResultUpdateWithWhereUniqueWithoutInterviewInput {
   where: ResultWhereUniqueInput!
   data: ResultUpdateWithoutInterviewDataInput!
+}
+
+input ResultUpsertWithWhereUniqueWithoutCompanyInput {
+  where: ResultWhereUniqueInput!
+  update: ResultUpdateWithoutCompanyDataInput!
+  create: ResultCreateWithoutCompanyInput!
 }
 
 input ResultUpsertWithWhereUniqueWithoutInterviewInput {
@@ -2641,6 +2838,7 @@ input ResultWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   interview: InterviewWhereInput
+  company: CompanyWhereInput
 }
 
 input ResultWhereUniqueInput {

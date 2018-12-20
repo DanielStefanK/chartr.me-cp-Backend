@@ -7,12 +7,23 @@ type Me {
 
 type Query {
   me: User!
+  myCompany: Company!
   checkUser(email: String!): Boolean!
 }
 
 type Mutation {
   signup(name: String!, email: String!, password: String!): Me!
   login(email: String!, password: String!): Me!
+  createOwnCompany(
+    name: String!
+    employees: [UserCreateWithoutCompanyInput!]!
+  ): Company!
+}
+
+input UserCreateWithoutCompanyInput {
+  email: String!
+  name: String!
+  password: String!
 }
 
 type User {

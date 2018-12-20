@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 
 const user = {
-  async signup(parent, args, ctx) {
+  async signup(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();
 
     const schema = Joi.object().keys({
@@ -38,19 +38,22 @@ const user = {
 
     const password = await bcrypt.hash(args.password, 10);
 
-    const user = await ctx.db.mutation.createUser({
-      data: {
-        ...args,
-        password,
+    const user = await ctx.db.mutation.createUser(
+      {
+        data: {
+          ...args,
+          password,
+        },
       },
-    });
+      '{id, name, email, password, permissions, company {id name}}',
+    );
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
     return { me: user, token: token };
   },
 
-  async login(parent, args, ctx) {
+  async login(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();
 
     const schema = Joi.object().keys({
@@ -73,7 +76,10 @@ const user = {
       throw new Error('Invalid Input');
     }
 
-    const user = await ctx.db.query.user({ where: { email: args.email } });
+    const user = await ctx.db.query.user(
+      { where: { email: args.email } },
+      '{id, name, email, password, permissions, company {id name}}',
+    );
 
     if (!user) {
       throw new Error(`No such user found for email ${args.email}`);
