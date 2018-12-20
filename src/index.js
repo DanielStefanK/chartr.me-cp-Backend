@@ -2,10 +2,14 @@ require('dotenv').config({ path: '.env' });
 
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const cors = require('cors')
 
 const { createServer, db } = require('./createServer');
 
 const server = createServer();
+
+// temorary solution only allow cors from frontend url
+server.express.use(cors());
 
 server.express.use(cookieParser());
 
