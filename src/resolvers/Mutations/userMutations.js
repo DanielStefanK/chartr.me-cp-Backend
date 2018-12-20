@@ -9,18 +9,17 @@ const user = {
     const schema = Joi.object().keys({
       name: Joi.string()
         .alphanum()
-        .min(3)
+        .min(4)
         .max(30)
-        .required()
-        .options({
-          language: { min: 'must match password', any: 'invalid name' },
-        }),
+        .required(),
       password: Joi.string()
-        .regex(/^[a-zA-Z0-9]{3,30}$/)
+        .min(6)
         .required(),
       email: Joi.string()
         .email({ minDomainAtoms: 2 })
-        .required(),
+        .required()
+        .min(4)
+        .max(30),
     });
 
     const { error, value } = Joi.validate(
