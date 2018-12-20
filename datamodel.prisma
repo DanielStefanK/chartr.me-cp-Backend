@@ -19,6 +19,7 @@ type Company {
   contact: User! @relation(name: "CompanyContactRelation")
   employees: [User!]! @relation(name: "CompanyUserRelation")
   interviews: [Interview!]! @relation(name: "CompanyInterviewRelation")
+  results: [Result]! @relation(name: "CompanyResultRelation")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -36,6 +37,7 @@ enum Permission {
 
 type Interview {
   id: ID! @unique
+  name: String!
   company: Company! @relation(name: "CompanyInterviewRelation")
   inactive: Boolean! @default(value: "false")
   deleted: Boolean! @default(value: "false")
@@ -58,6 +60,7 @@ type Result {
   score: Int
   content: Json!
   interview: Interview! @relation(name: "InterviewResultRelation")
+  company: Company! @relation(name: "CompanyResultRelation")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
