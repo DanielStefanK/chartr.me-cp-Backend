@@ -50,16 +50,36 @@ const user = {
     return { me: user, token: token };
   },
 
-  async login(parent, { email, password }, ctx) {
-    // TODO: validate user input
+  async login(parent, args, ctx) {
+    args.email = args.email.toLowerCase();
 
-    const user = await ctx.db.query.user({ where: { email } });
+    const schema = Joi.object().keys({
+      password: Joi.string().required(),
+      email: Joi.string()
+        .email({ minDomainAtoms: 2 })
+        .required(),
+    });
 
-    if (!user) {
-      throw new Error(`No such user found for email ${email}`);
+    const { error, value } = Joi.validate(
+      {
+        email: args.email,
+        password: args.password,
+      },
+      schema,
+    );
+
+    if (error) {
+      //TODO: error handling
+      throw new Error('Invalid Input');
     }
 
-    const valid = await bcrypt.compare(password, user.password);
+    const user = await ctx.db.query.user({ where: { email: args.email } });
+
+    if (!user) {
+      throw new Error(`No such user found for email ${args.email}`);
+    }
+
+    const valid = await bcrypt.compare(args.password, user.password);
 
     if (!valid) {
       throw new Error('Invalid Password!');
