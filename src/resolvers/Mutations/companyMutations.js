@@ -6,6 +6,9 @@ const company = {
     if (!ctx.user) {
       throw new Error('not authenticated');
     }
+    if (ctx.user.company.id) {
+      throw new Error('user already has a company');
+    }
 
     const schema = Joi.object().keys({
       name: Joi.string().required(),
