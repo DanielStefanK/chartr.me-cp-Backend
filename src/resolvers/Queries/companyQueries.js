@@ -12,6 +12,13 @@ const user = {
     );
     return company;
   },
+
+  async myEmployees(parent, args, ctx, info) {
+    return ctx.db.query.users({
+      ...args,
+      where: { ...args.where, company: { id: ctx.user.company.id } },
+    });
+  },
 };
 
 module.exports = user;

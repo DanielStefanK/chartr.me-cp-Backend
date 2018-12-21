@@ -8,6 +8,15 @@ type Me {
 type Query {
   me: User!
   myCompany: Company!
+  myEmployees(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]!
   checkUser(email: String!): Boolean!
 }
 
@@ -18,6 +27,8 @@ type Mutation {
     name: String!
     employees: [UserCreateWithoutCompanyInput!]!
   ): Company!
+  addEmployee(name: String!, email: String!, password: String!): User!
+  removeEmployee(id: ID!): User!
 }
 
 input UserCreateWithoutCompanyInput {
