@@ -23,12 +23,14 @@ type Query {
 type Mutation {
   signup(name: String!, email: String!, password: String!): Me!
   login(email: String!, password: String!): Me!
+
   createOwnCompany(
     name: String!
     employees: [UserCreateWithoutCompanyInput!]!
   ): Company!
   addEmployee(name: String!, email: String!, password: String!): User!
   removeEmployee(id: ID!): User!
+  updateOwnCompany(name: String, contact: ID!): Company!
 }
 
 input UserCreateWithoutCompanyInput {

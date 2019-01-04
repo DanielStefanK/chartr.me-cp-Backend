@@ -69,6 +69,62 @@ const company = {
       info,
     );
   },
+
+  async updateOwnCompany(parent, args, ctx, info) {
+    if (!ctx.user) {
+      throw new Error('not authenticated');
+    }
+    if (!ctx.user.company) {
+      throw new Error('No Company found');
+    }
+
+    const schema = Joi.object().keys({
+      name: Joi.string(),
+    });
+
+    const { error, value } = Joi.validate(
+      {
+        name: args.name,
+      },
+      schema,
+    );
+
+    if (error) {
+      //TODO: error handling
+      throw new Error('Invalid Input');
+    }
+
+    const currentCompany = await ctx.db.query.company(
+      { where: { id: ctx.user.company.id } },
+      '{id contact {id}}',
+    );
+
+    const updateData = {};
+
+    if (args.name) updateData.name = args.name;
+    if (args.contact) {
+      const user = await ctx.db.query.user(
+        { where: { id: args.contact } },
+        '{id company {id}}',
+      );
+
+      if (user.company.id != ctx.user.company.id) {
+        throw new Error('Invalid Input');
+      } else if (args.contact && currentCompany.contact.id != args.contact) {
+        updateData.contact = { connect: { id: args.contact } };
+      }
+    }
+
+    const updatedCompany = ctx.db.mutation.updateCompany(
+      {
+        data: updateData,
+        where: { id: ctx.user.company.id },
+      },
+      info,
+    );
+
+    return updatedCompany;
+  },
 };
 
 module.exports = company;

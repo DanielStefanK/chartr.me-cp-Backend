@@ -2,7 +2,7 @@ require('dotenv').config({ path: '.env' });
 
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const cors = require('cors')
+const cors = require('cors');
 
 const { createServer, db } = require('./createServer');
 
