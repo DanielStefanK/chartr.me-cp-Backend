@@ -6,6 +6,10 @@ const user = {
       throw new Error('not authenticated');
     }
 
+    if (!ctx.user.company) {
+      throw new Error('No Company found');
+    }
+
     const company = await ctx.db.query.company(
       { where: { id: ctx.user.company.id } },
       info,
