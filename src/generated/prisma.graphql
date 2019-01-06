@@ -1,5 +1,5 @@
 # source: https://db.chartr.me
-# timestamp: Thu Dec 20 2018 18:53:39 GMT+0100 (GMT+01:00)
+# timestamp: Sun Jan 06 2019 16:29:04 GMT+0100 (GMT+01:00)
 
 type AggregateCompany {
   count: Int!
@@ -33,6 +33,7 @@ type BatchPayload {
 type Company implements Node {
   id: ID!
   name: String!
+  credits: Int
   deleted: Boolean!
   contact: User!
   employees(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -54,6 +55,7 @@ type CompanyConnection {
 
 input CompanyCreateInput {
   name: String!
+  credits: Int
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   employees: UserCreateManyWithoutCompanyInput
@@ -83,6 +85,7 @@ input CompanyCreateOneWithoutResultsInput {
 
 input CompanyCreateWithoutContactInput {
   name: String!
+  credits: Int
   deleted: Boolean
   employees: UserCreateManyWithoutCompanyInput
   interviews: InterviewCreateManyWithoutCompanyInput
@@ -91,6 +94,7 @@ input CompanyCreateWithoutContactInput {
 
 input CompanyCreateWithoutEmployeesInput {
   name: String!
+  credits: Int
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   interviews: InterviewCreateManyWithoutCompanyInput
@@ -99,6 +103,7 @@ input CompanyCreateWithoutEmployeesInput {
 
 input CompanyCreateWithoutInterviewsInput {
   name: String!
+  credits: Int
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   employees: UserCreateManyWithoutCompanyInput
@@ -107,6 +112,7 @@ input CompanyCreateWithoutInterviewsInput {
 
 input CompanyCreateWithoutResultsInput {
   name: String!
+  credits: Int
   deleted: Boolean
   contact: UserCreateOneWithoutContactOfInput!
   employees: UserCreateManyWithoutCompanyInput
@@ -127,6 +133,8 @@ enum CompanyOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  credits_ASC
+  credits_DESC
   deleted_ASC
   deleted_DESC
   createdAt_ASC
@@ -138,6 +146,7 @@ enum CompanyOrderByInput {
 type CompanyPreviousValues {
   id: ID!
   name: String!
+  credits: Int
   deleted: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -184,6 +193,7 @@ input CompanySubscriptionWhereInput {
 
 input CompanyUpdateInput {
   name: String
+  credits: Int
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   employees: UserUpdateManyWithoutCompanyInput
@@ -193,6 +203,7 @@ input CompanyUpdateInput {
 
 input CompanyUpdateManyMutationInput {
   name: String
+  credits: Int
   deleted: Boolean
 }
 
@@ -230,6 +241,7 @@ input CompanyUpdateOneWithoutEmployeesInput {
 
 input CompanyUpdateWithoutContactDataInput {
   name: String
+  credits: Int
   deleted: Boolean
   employees: UserUpdateManyWithoutCompanyInput
   interviews: InterviewUpdateManyWithoutCompanyInput
@@ -238,6 +250,7 @@ input CompanyUpdateWithoutContactDataInput {
 
 input CompanyUpdateWithoutEmployeesDataInput {
   name: String
+  credits: Int
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   interviews: InterviewUpdateManyWithoutCompanyInput
@@ -246,6 +259,7 @@ input CompanyUpdateWithoutEmployeesDataInput {
 
 input CompanyUpdateWithoutInterviewsDataInput {
   name: String
+  credits: Int
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   employees: UserUpdateManyWithoutCompanyInput
@@ -254,6 +268,7 @@ input CompanyUpdateWithoutInterviewsDataInput {
 
 input CompanyUpdateWithoutResultsDataInput {
   name: String
+  credits: Int
   deleted: Boolean
   contact: UserUpdateOneRequiredWithoutContactOfInput
   employees: UserUpdateManyWithoutCompanyInput
@@ -369,6 +384,28 @@ input CompanyWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  credits: Int
+
+  """All values that are not equal to given value."""
+  credits_not: Int
+
+  """All values that are contained in given list."""
+  credits_in: [Int!]
+
+  """All values that are not contained in given list."""
+  credits_not_in: [Int!]
+
+  """All values less than the given value."""
+  credits_lt: Int
+
+  """All values less than or equal the given value."""
+  credits_lte: Int
+
+  """All values greater than the given value."""
+  credits_gt: Int
+
+  """All values greater than or equal the given value."""
+  credits_gte: Int
   deleted: Boolean
 
   """All values that are not equal to given value."""

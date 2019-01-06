@@ -125,6 +125,27 @@ const company = {
 
     return updatedCompany;
   },
+
+  // TODO: Real addin credits
+  async addCredits(parent, args, ctx, info) {
+    if (!ctx.user) {
+      throw new Error('not authenticated');
+    }
+    if (!ctx.user.company) {
+      throw new Error('No Company found');
+    }
+    const creditsToAdd = args.amount * 3;
+
+    const updatedCompany = await ctx.db.mutation.updateCompany(
+      {
+        data: { credits: ctx.user.company.credits + creditsToAdd },
+        where: { id: ctx.user.company.id },
+      },
+      '{credits}',
+    );
+
+    return updatedCompany.credits;
+  },
 };
 
 module.exports = company;

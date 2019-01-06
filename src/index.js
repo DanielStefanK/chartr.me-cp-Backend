@@ -35,7 +35,7 @@ server.express.use(async (req, res, next) => {
     {
       where: { id: req.userId },
     },
-    '{id, company {id}, deleted, permissions}',
+    '{id, company {id credits}, deleted, permissions}',
   );
 
   req.user = user;
