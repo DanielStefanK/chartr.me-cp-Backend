@@ -78,7 +78,7 @@ type Question {
   matchTags: [String!]!
   distraction: Int @default(value: "0")
   time: Int
-  givenAnswers: [String!]!
+  givenAnswers: [String!]
   interview: Interview! @relation(name: "InterviewQuestionRelation")
   createdAt: DateTime!
   updatedAt: DateTime!
