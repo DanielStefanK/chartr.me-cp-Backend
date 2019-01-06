@@ -16,7 +16,7 @@ type User {
 type Company {
   id: ID! @unique
   name: String!
-  credits: Int @default(value: "100")
+  credits: Int! @default(value: "100")
   deleted: Boolean! @default(value: "false")
   contact: User! @relation(name: "CompanyContactRelation")
   employees: [User!]! @relation(name: "CompanyUserRelation")
