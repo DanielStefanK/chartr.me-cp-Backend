@@ -1,5 +1,5 @@
 # source: https://db.chartr.me
-# timestamp: Sun Jan 06 2019 16:29:04 GMT+0100 (GMT+01:00)
+# timestamp: Fri Jan 18 2019 10:20:03 GMT+0100 (GMT+01:00)
 
 type AggregateCompany {
   count: Int!
@@ -33,7 +33,7 @@ type BatchPayload {
 type Company implements Node {
   id: ID!
   name: String!
-  credits: Int
+  credits: Int!
   deleted: Boolean!
   contact: User!
   employees(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -146,7 +146,7 @@ enum CompanyOrderByInput {
 type CompanyPreviousValues {
   id: ID!
   name: String!
-  credits: Int
+  credits: Int!
   deleted: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -859,18 +859,20 @@ input InterviewUpdateManyWithWhereNestedInput {
   data: InterviewUpdateManyDataInput!
 }
 
-input InterviewUpdateOneRequiredWithoutInterviewInput {
-  create: InterviewCreateWithoutInterviewInput
-  connect: InterviewWhereUniqueInput
-  update: InterviewUpdateWithoutInterviewDataInput
-  upsert: InterviewUpsertWithoutInterviewInput
-}
-
 input InterviewUpdateOneRequiredWithoutResultsInput {
   create: InterviewCreateWithoutResultsInput
   connect: InterviewWhereUniqueInput
   update: InterviewUpdateWithoutResultsDataInput
   upsert: InterviewUpsertWithoutResultsInput
+}
+
+input InterviewUpdateOneWithoutInterviewInput {
+  create: InterviewCreateWithoutInterviewInput
+  connect: InterviewWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: InterviewUpdateWithoutInterviewDataInput
+  upsert: InterviewUpsertWithoutInterviewInput
 }
 
 input InterviewUpdateWithoutCompanyDataInput {
@@ -1252,7 +1254,7 @@ type Question implements Node {
   distraction: Int
   time: Int
   givenAnswers: [String!]!
-  interview: Interview!
+  interview: Interview
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1286,7 +1288,7 @@ input QuestionCreateInput {
   parentTemplate: TemplateCreateOneWithoutInterviewInput
   parentQuestion: QuestionCreateOneWithoutSubQuestionsInput
   subQuestions: QuestionCreateManyWithoutParentQuestionInput
-  interview: InterviewCreateOneWithoutInterviewInput!
+  interview: InterviewCreateOneWithoutInterviewInput
 }
 
 input QuestionCreateManyWithoutInterviewInput {
@@ -1336,7 +1338,7 @@ input QuestionCreateWithoutParentQuestionInput {
   givenAnswers: QuestionCreategivenAnswersInput
   parentTemplate: TemplateCreateOneWithoutInterviewInput
   subQuestions: QuestionCreateManyWithoutParentQuestionInput
-  interview: InterviewCreateOneWithoutInterviewInput!
+  interview: InterviewCreateOneWithoutInterviewInput
 }
 
 input QuestionCreateWithoutParentTemplateInput {
@@ -1349,7 +1351,7 @@ input QuestionCreateWithoutParentTemplateInput {
   givenAnswers: QuestionCreategivenAnswersInput
   parentQuestion: QuestionCreateOneWithoutSubQuestionsInput
   subQuestions: QuestionCreateManyWithoutParentQuestionInput
-  interview: InterviewCreateOneWithoutInterviewInput!
+  interview: InterviewCreateOneWithoutInterviewInput
 }
 
 input QuestionCreateWithoutSubQuestionsInput {
@@ -1362,7 +1364,7 @@ input QuestionCreateWithoutSubQuestionsInput {
   givenAnswers: QuestionCreategivenAnswersInput
   parentTemplate: TemplateCreateOneWithoutInterviewInput
   parentQuestion: QuestionCreateOneWithoutSubQuestionsInput
-  interview: InterviewCreateOneWithoutInterviewInput!
+  interview: InterviewCreateOneWithoutInterviewInput
 }
 
 """An edge in a connection."""
@@ -1663,7 +1665,7 @@ input QuestionUpdateInput {
   parentTemplate: TemplateUpdateOneWithoutInterviewInput
   parentQuestion: QuestionUpdateOneWithoutSubQuestionsInput
   subQuestions: QuestionUpdateManyWithoutParentQuestionInput
-  interview: InterviewUpdateOneRequiredWithoutInterviewInput
+  interview: InterviewUpdateOneWithoutInterviewInput
 }
 
 input QuestionUpdateManyDataInput {
@@ -1760,7 +1762,7 @@ input QuestionUpdateWithoutParentQuestionDataInput {
   givenAnswers: QuestionUpdategivenAnswersInput
   parentTemplate: TemplateUpdateOneWithoutInterviewInput
   subQuestions: QuestionUpdateManyWithoutParentQuestionInput
-  interview: InterviewUpdateOneRequiredWithoutInterviewInput
+  interview: InterviewUpdateOneWithoutInterviewInput
 }
 
 input QuestionUpdateWithoutParentTemplateDataInput {
@@ -1773,7 +1775,7 @@ input QuestionUpdateWithoutParentTemplateDataInput {
   givenAnswers: QuestionUpdategivenAnswersInput
   parentQuestion: QuestionUpdateOneWithoutSubQuestionsInput
   subQuestions: QuestionUpdateManyWithoutParentQuestionInput
-  interview: InterviewUpdateOneRequiredWithoutInterviewInput
+  interview: InterviewUpdateOneWithoutInterviewInput
 }
 
 input QuestionUpdateWithoutSubQuestionsDataInput {
@@ -1786,7 +1788,7 @@ input QuestionUpdateWithoutSubQuestionsDataInput {
   givenAnswers: QuestionUpdategivenAnswersInput
   parentTemplate: TemplateUpdateOneWithoutInterviewInput
   parentQuestion: QuestionUpdateOneWithoutSubQuestionsInput
-  interview: InterviewUpdateOneRequiredWithoutInterviewInput
+  interview: InterviewUpdateOneWithoutInterviewInput
 }
 
 input QuestionUpdateWithWhereUniqueWithoutInterviewInput {

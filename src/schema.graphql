@@ -32,6 +32,8 @@ type Mutation {
   removeEmployee(id: ID!): User!
   updateOwnCompany(name: String, contact: ID!): Company!
   addCredits(amount: Int!): Int!
+
+  createTemplate(data: TemplateCreateInput): Template!
 }
 
 input UserCreateWithoutCompanyInput {

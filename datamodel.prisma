@@ -79,7 +79,7 @@ type Question {
   distraction: Int @default(value: "0")
   time: Int
   givenAnswers: [String!]
-  interview: Interview! @relation(name: "InterviewQuestionRelation")
+  interview: Interview @relation(name: "InterviewQuestionRelation")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
