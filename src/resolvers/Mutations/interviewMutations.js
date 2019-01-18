@@ -2,8 +2,8 @@ const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
-const template = {
-  async createTemplate(parent, args, ctx, info) {
+const interview = {
+  async createInterview(parent, args, ctx, info) {
     if (!ctx.user) {
       throw new Error('not authenticated');
     }
@@ -14,7 +14,10 @@ const template = {
     const from = moment(Date.now());
     const to = moment(args.data.activeUntil);
 
-    const price = (args.data.limit * to.diff(from, 'days')) / 10;
+    const price = Math.max(
+      10,
+      Math.round((args.data.limit * to.diff(from, 'days')) / 10),
+    );
     const newCredits = ctx.user.company.credits - price;
 
     if (newCredits < 0) {
@@ -37,14 +40,22 @@ const template = {
           },
         },
       },
-      info,
+      '{id}',
     );
 
-    await ctx.db.mutation.updateCompany(
-      { data: { credits: newCredits } },
-      { where: { id: ctx.user.company.id } },
+    const updatedCompany = await ctx.db.mutation.updateCompany(
+      {
+        data: { credits: newCredits },
+        where: { id: ctx.user.company.id },
+      },
+      '{credits}',
     );
+
+    return {
+      id: interview.id,
+      newBalance: newCredits,
+    };
   },
 };
 
-module.exports = template;
+module.exports = interview;

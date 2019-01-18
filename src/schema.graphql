@@ -5,6 +5,11 @@ type Me {
   token: String!
 }
 
+type InterviewCreateResponse {
+  id: ID!
+  newBalance: Int!
+}
+
 type Query {
   me: User!
   myCompany: Company!
@@ -33,13 +38,22 @@ type Mutation {
   updateOwnCompany(name: String, contact: ID!): Company!
   addCredits(amount: Int!): Int!
 
-  createTemplate(data: TemplateCreateInput): Template!
+  createTemplate(data: TemplateCreateInput!): Template!
+
+  createInterview(data: InterviewCreateInput!): InterviewCreateResponse!
 }
 
 input UserCreateWithoutCompanyInput {
   email: String!
   name: String!
   password: String!
+}
+
+input InterviewCreateInput {
+  name: String!
+  activeUntil: DateTime!
+  limit: Int
+  interview: QuestionCreateManyWithoutInterviewInput
 }
 
 type User {
