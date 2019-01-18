@@ -1,5 +1,5 @@
 # source: https://db.chartr.me
-# timestamp: Fri Jan 18 2019 10:20:03 GMT+0100 (GMT+01:00)
+# timestamp: Fri Jan 18 2019 10:49:14 GMT+0100 (GMT+01:00)
 
 type AggregateCompany {
   count: Int!
@@ -476,7 +476,7 @@ type Interview implements Node {
   id: ID!
   name: String!
   company: Company!
-  inactive: Boolean!
+  activeUntil: DateTime!
   deleted: Boolean!
   creator: User!
   interview(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
@@ -498,7 +498,7 @@ type InterviewConnection {
 
 input InterviewCreateInput {
   name: String!
-  inactive: Boolean
+  activeUntil: DateTime!
   deleted: Boolean
   limit: Int
   company: CompanyCreateOneWithoutInterviewsInput!
@@ -529,7 +529,7 @@ input InterviewCreateOneWithoutResultsInput {
 
 input InterviewCreateWithoutCompanyInput {
   name: String!
-  inactive: Boolean
+  activeUntil: DateTime!
   deleted: Boolean
   limit: Int
   creator: UserCreateOneWithoutInterviewsInput!
@@ -539,7 +539,7 @@ input InterviewCreateWithoutCompanyInput {
 
 input InterviewCreateWithoutCreatorInput {
   name: String!
-  inactive: Boolean
+  activeUntil: DateTime!
   deleted: Boolean
   limit: Int
   company: CompanyCreateOneWithoutInterviewsInput!
@@ -549,7 +549,7 @@ input InterviewCreateWithoutCreatorInput {
 
 input InterviewCreateWithoutInterviewInput {
   name: String!
-  inactive: Boolean
+  activeUntil: DateTime!
   deleted: Boolean
   limit: Int
   company: CompanyCreateOneWithoutInterviewsInput!
@@ -559,7 +559,7 @@ input InterviewCreateWithoutInterviewInput {
 
 input InterviewCreateWithoutResultsInput {
   name: String!
-  inactive: Boolean
+  activeUntil: DateTime!
   deleted: Boolean
   limit: Int
   company: CompanyCreateOneWithoutInterviewsInput!
@@ -581,8 +581,8 @@ enum InterviewOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  inactive_ASC
-  inactive_DESC
+  activeUntil_ASC
+  activeUntil_DESC
   deleted_ASC
   deleted_DESC
   limit_ASC
@@ -596,7 +596,7 @@ enum InterviewOrderByInput {
 type InterviewPreviousValues {
   id: ID!
   name: String!
-  inactive: Boolean!
+  activeUntil: DateTime!
   deleted: Boolean!
   limit: Int!
   createdAt: DateTime!
@@ -692,10 +692,28 @@ input InterviewScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  inactive: Boolean
+  activeUntil: DateTime
 
   """All values that are not equal to given value."""
-  inactive_not: Boolean
+  activeUntil_not: DateTime
+
+  """All values that are contained in given list."""
+  activeUntil_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  activeUntil_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  activeUntil_lt: DateTime
+
+  """All values less than or equal the given value."""
+  activeUntil_lte: DateTime
+
+  """All values greater than the given value."""
+  activeUntil_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  activeUntil_gte: DateTime
   deleted: Boolean
 
   """All values that are not equal to given value."""
@@ -809,7 +827,7 @@ input InterviewSubscriptionWhereInput {
 
 input InterviewUpdateInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
   company: CompanyUpdateOneRequiredWithoutInterviewsInput
@@ -820,14 +838,14 @@ input InterviewUpdateInput {
 
 input InterviewUpdateManyDataInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
 }
 
 input InterviewUpdateManyMutationInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
 }
@@ -877,7 +895,7 @@ input InterviewUpdateOneWithoutInterviewInput {
 
 input InterviewUpdateWithoutCompanyDataInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
   creator: UserUpdateOneRequiredWithoutInterviewsInput
@@ -887,7 +905,7 @@ input InterviewUpdateWithoutCompanyDataInput {
 
 input InterviewUpdateWithoutCreatorDataInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
   company: CompanyUpdateOneRequiredWithoutInterviewsInput
@@ -897,7 +915,7 @@ input InterviewUpdateWithoutCreatorDataInput {
 
 input InterviewUpdateWithoutInterviewDataInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
   company: CompanyUpdateOneRequiredWithoutInterviewsInput
@@ -907,7 +925,7 @@ input InterviewUpdateWithoutInterviewDataInput {
 
 input InterviewUpdateWithoutResultsDataInput {
   name: String
-  inactive: Boolean
+  activeUntil: DateTime
   deleted: Boolean
   limit: Int
   company: CompanyUpdateOneRequiredWithoutInterviewsInput
@@ -1036,10 +1054,28 @@ input InterviewWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  inactive: Boolean
+  activeUntil: DateTime
 
   """All values that are not equal to given value."""
-  inactive_not: Boolean
+  activeUntil_not: DateTime
+
+  """All values that are contained in given list."""
+  activeUntil_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  activeUntil_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  activeUntil_lt: DateTime
+
+  """All values less than or equal the given value."""
+  activeUntil_lte: DateTime
+
+  """All values greater than the given value."""
+  activeUntil_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  activeUntil_gte: DateTime
   deleted: Boolean
 
   """All values that are not equal to given value."""

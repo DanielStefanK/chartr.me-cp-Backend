@@ -41,7 +41,7 @@ type Interview {
   id: ID! @unique
   name: String!
   company: Company! @relation(name: "CompanyInterviewRelation")
-  inactive: Boolean! @default(value: "false")
+  activeUntil: DateTime!
   deleted: Boolean! @default(value: "false")
   creator: User! @relation(name: "UserInterviewRelation")
   interview: [Question!]! @relation(name: "InterviewQuestionRelation")
