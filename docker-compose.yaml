@@ -4,7 +4,6 @@ services:
     image: registry.gitlab.com/e-venture/graphql-api:latest
     networks:
       - web
-      - internal
     labels:
       - traefik.enabled=true
       - traefik.backend=chartr-cp-backend
@@ -13,7 +12,7 @@ services:
       - traefik.port=4000
     restart: always
     environment:
-      - PRISMA_ENDPOINT=db.chartr.me
+      - PRISMA_ENDPOINT=https://db.chartr.me
       - PRISMA_MANAGEMENT_API_SECRET=geheim
       - PRISMA_SECRET=geheim
       - APP_SECRET=geheim
