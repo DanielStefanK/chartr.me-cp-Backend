@@ -6,7 +6,7 @@ const company = {
     if (!ctx.user) {
       throw new Error('not authenticated');
     }
-    if (ctx.user.company.id) {
+    if (ctx.user.company && ctx.user.company.id) {
       throw new Error('user already has a company');
     }
 
