@@ -1,6 +1,6 @@
 const { forwardTo } = require('prisma-binding');
 
-const user = {
+const company = {
   async myCompany(parent, args, ctx, info) {
     if (!ctx.user) {
       throw new Error('not authenticated');
@@ -25,4 +25,4 @@ const user = {
   },
 };
 
-module.exports = user;
+module.exports = company;

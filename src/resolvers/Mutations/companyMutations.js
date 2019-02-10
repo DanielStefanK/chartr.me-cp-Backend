@@ -53,8 +53,6 @@ const company = {
       })),
     );
 
-    console.log(employees);
-
     return ctx.db.mutation.createCompany(
       {
         data: {

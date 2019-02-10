@@ -22,6 +22,35 @@ type Query {
     first: Int
     last: Int
   ): [User!]!
+  myInterviews(
+    where: InterviewWhereInput
+    orderBy: InterviewOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Interview!]
+  myInterviewsConnection(
+    where: InterviewWhereInput
+    orderBy: InterviewOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): InterviewConnection!
+  interview(id: ID!): Interview!
+  templates(
+    where: TemplateWhereInput
+    orderBy: TemplateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Template!]!
+  template(id: ID!): Template!
   checkUser(email: String!): Boolean!
 }
 

@@ -7,7 +7,6 @@ const user = {
     }
 
     const user = await ctx.db.query.user({ where: { id: ctx.user.id } }, info);
-    console.log(user);
     return user;
   },
 
