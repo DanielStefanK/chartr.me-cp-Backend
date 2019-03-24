@@ -41,6 +41,25 @@ type Query {
     last: Int
   ): InterviewConnection!
   interview(id: ID!): Interview!
+  myResults(
+    where: ResultWhereInput
+    orderBy: ResultOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Result!]
+  myResultsConnection(
+    where: ResultWhereInput
+    orderBy: ResultOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [ResultConnection!]
+  result(id: ID!): Result!
   templates(
     where: TemplateWhereInput
     orderBy: TemplateOrderByInput
