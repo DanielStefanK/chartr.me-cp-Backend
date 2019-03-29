@@ -132,7 +132,7 @@ const company = {
     if (!ctx.user.company) {
       throw new Error('No Company found');
     }
-    const creditsToAdd = args.amount * 3;
+    const creditsToAdd = args.amount;
 
     const updatedCompany = await ctx.db.mutation.updateCompany(
       {
