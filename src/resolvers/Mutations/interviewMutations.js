@@ -59,6 +59,28 @@ const interview = {
       newBalance: newCredits,
     };
   },
+  async deleteInterview(parent, { id }, ctx, info) {
+    if (!ctx.user) {
+      throw new Error('not authenticated');
+    }
+    if (!ctx.user.company) {
+      throw new Error('No Company found');
+    }
+
+    const interview = await ctx.db.query.interview(
+      { where: { id } },
+      '{id company {id}}',
+    );
+
+    if (interview.company.id !== ctx.user.company.id) {
+      throw new Error('not authenticated');
+    }
+
+    return await ctx.db.mutation.updateInterview(
+      { where: { id }, data: { deleted: true } },
+      info,
+    );
+  },
 };
 
 module.exports = interview;

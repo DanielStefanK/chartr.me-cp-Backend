@@ -89,6 +89,7 @@ type Mutation {
   createTemplate(data: TemplateCreateInput!): Template!
 
   createInterview(data: InterviewCreateInput!): InterviewCreateResponse!
+  deleteInterview(id: ID!): Interview!
 }
 
 input UserCreateWithoutCompanyInput {
