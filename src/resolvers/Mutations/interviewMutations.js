@@ -16,8 +16,11 @@ const interview = {
 
     const price = Math.max(
       10,
-      Math.round(1/30 * to.diff(from, 'days') * (args.data.limit * 0.1)), 
+      Math.round(
+        (1 / 30) * to.diff(from, 'days') * ((args.data.limit || 1) * 0.1),
+      ),
     );
+
     const newCredits = ctx.user.company.credits - price;
 
     if (newCredits < 0) {
