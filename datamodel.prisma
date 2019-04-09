@@ -21,7 +21,7 @@ type Company {
   contact: User! @relation(name: "CompanyContactRelation")
   employees: [User!]! @relation(name: "CompanyUserRelation")
   interviews: [Interview!]! @relation(name: "CompanyInterviewRelation")
-  results: [Result]! @relation(name: "CompanyResultRelation")
+  results: [Result!]! @relation(name: "CompanyResultRelation")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
